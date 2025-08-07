@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../generated/prisma" xxxx
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        	          	      Int       @id @default(autoincrement())
+  name      		  	            String
+  email     		                String    @unique
+  password  		                String
+  is_verified   	              Boolean   @default(false)
+  role      		                UserRole  @default(USER)
+  password_reset_otp	          String?   @db.VarChar(6)  
+  password_reset_otp_expires    DateTime? 
+  email_verification_otp        String?   @db.VarChar(6)
+  email_verification_expires    DateTime?
+  orders    			              Order[]
+  products                      Product[] // Array of products that user is owner of them
+  created_at 			              DateTime  @default(now())
+  updated_at			              DateTime  @updatedAt
+
+  @@map("users")
+}
+
+model Product {
+  id            		            Int       @id @default(autoincrement())
+  name          		            String
+  description   		            String
+  price         		            Float
+  stock         		            Int
+  sku           		            String   @unique
+  owner_id                      Int
+  owner                         User     @relation(fields: [owner_id], references: [id])
+  order_items                   OrderItem[]
+  created_at    		            DateTime @default(now())
+  updated_at			              DateTime @updatedAt
+
+  @@map("products")
+}
+
+model Order {
+  id           			            Int      @id @default(autoincrement())
+  user_id       		            Int
+  user         			            User     @relation(fields: [user_id], references: [id])
+  items                         OrderItem[]
+  total_price                   Float
+  created_at    		            DateTime @default(now())
+  updated_at			              DateTime @updatedAt
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id                            Int      @id @default(autoincrement())
+  order_id                      Int
+  order                         Order    @relation(fields: [order_id], references: [id])
+  product_id                    Int
+  product                       Product  @relation(fields: [product_id], references: [id])
+  quantity                      Int
+  price_at_purchase             Float
+
+  @@map("order_items")
+}
+
+enum UserRole {
+  ADMIN
+  USER
+}

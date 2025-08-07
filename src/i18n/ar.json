@@ -1,0 +1,50 @@
+{
+  "auth": {
+    "email_exists": "البريد الإلكتروني مستخدم مسبقًا.",
+    "register_success": "تم التسجيل بنجاح. يرجى تأكيد بريدك الإلكتروني.",
+    "already_verified": "تم التحقق من المستخدم مسبقًا",
+    "otp_invalid_or_expired": "رمز التحقق غير صالح أو منتهي.",
+    "otp_invalid": "رمز التحقق غير صالح.",
+    "otp_expired": "رمز التحقق منتهي.",
+    "verified_success": "تم تأكيد البريد الإلكتروني بنجاح.",
+    "not_verified": "يرجى تأكيد بريدك الإلكتروني أولاً.",
+    "login_success": "تم تسجيل الدخول بنجاح.",
+    "profile_success": "تم جلب بيانات المستخدم بنجاح",
+    "user_not_found": "المستخدم غير موجود",
+    "invalid_credentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة",    
+    "unauthorized": "أنت غير مخول بتنفيذ هذا الإجراء.",
+    "forbidden_admin": "فقط المسؤول يمكنه الوصول إلى هذا المورد.",
+    "otp_sent": "تم إرسال رمز التحقق إلى بريدك الإلكتروني",
+    "password_reset_success": "تمت إعادة تعيين كلمة المرور بنجاح",
+    "invalid_request": "طلب غير صالح",
+    "unauthorized_no_token": "غير مصرح: لم يتم تقديم رمز التوثيق",
+    "unauthorized_user_not_found": "غير مصرح: المستخدم غير موجود",
+    "unauthorized_invalid_token": "غير مصرح: رمز التوثيق غير صالح"
+  },
+
+  "product": {
+    "missing_fields": "الرجاء تعبئة جميع الحقول المطلوبة.",
+    "sku_exists": "رقم المنتج (SKU) موجود بالفعل.",
+    "created_success": "تم إنشاء المنتج بنجاح.",
+    "invalid_id": "معرف المنتج غير صالح.",
+    "not_found": "لم يتم العثور على المنتج.",
+    "not_owner": "أنت لست مالك هذا المنتج.",
+    "updated_success": "تم تحديث المنتج بنجاح.",
+    "deleted_success": "تم حذف المنتج بنجاح.",
+    "list_success": "تم جلب المنتجات بنجاح",
+    "details_success": "تم جلب تفاصيل المنتج بنجاح"
+  },
+
+  "order": {
+    "invalid_items": "عناصر الطلب غير صالحة أو فارغة.",
+    "product_not_found": "لم يتم العثور على المنتج بالمعرف {{id}}.",
+    "insufficient_stock": "المخزون غير كافٍ للمنتج: {{product}}.",
+    "created_success": "تم إنشاء الطلب بنجاح.",
+    "deleted_success": "تم حذف الطلب بنجاح.",
+    "not_found": "لم يتم العثور على الطلب.",
+    "user_orders_success": "تم جلب طلبات المستخدم بنجاح",
+    "all_orders_success": "تم جلب جميع الطلبات بنجاح"
+  },
+  
+  "server_error": "خطأ في الخادم."
+}

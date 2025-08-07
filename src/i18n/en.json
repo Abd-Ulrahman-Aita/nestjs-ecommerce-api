@@ -1,0 +1,50 @@
+{
+  "auth": {
+    "email_exists": "Email already exists.",
+    "register_success": "Registration successful. Please verify your email.",
+    "already_verified": "User already verified",
+    "otp_invalid_or_expired": "Invalid or expired OTP.",
+    "otp_invalid": "Invalid OTP.",
+    "otp_expired": "OTP has expired.",
+    "verified_success": "Email verified successfully.",
+    "not_verified": "Please verify your email first.",
+    "login_success": "Login successful.",
+    "profile_success": "User profile fetched successfully",
+    "user_not_found": "User not found",
+    "invalid_credentials": "Invalid email or password",
+    "unauthorized": "You are not authorized to perform this action.",
+    "forbidden_admin": "Only admins can access this resource.",
+    "otp_sent": "OTP sent to your email",
+    "password_reset_success": "Password reset successfully",
+    "invalid_request": "Invalid request",
+    "unauthorized_no_token": "Unauthorized: No token provided",
+    "unauthorized_user_not_found": "Unauthorized: User not found",
+    "unauthorized_invalid_token": "Unauthorized: Invalid token"
+  },
+
+  "product": {
+    "missing_fields": "Missing required fields.",
+    "sku_exists": "SKU already exists.",
+    "created_success": "Product created successfully.",
+    "invalid_id": "Invalid product ID.",
+    "not_found": "Product not found.",
+    "not_owner": "You are not the owner of this product.",
+    "updated_success": "Product updated successfully.",
+    "deleted_success": "Product deleted successfully.",
+    "list_success": "Products fetched successfully",
+    "details_success": "Product details fetched successfully"
+  },
+
+  "order": {
+    "invalid_items": "Invalid or empty order items.",
+    "product_not_found": "Product with ID {{id}} not found.",
+    "insufficient_stock": "Insufficient stock for product: {{product}}.",
+    "created_success": "Order created successfully.",
+    "deleted_success": "Order deleted successfully.",
+    "not_found": "Order not found.",
+    "user_orders_success": "User orders fetched successfully",
+    "all_orders_success": "All orders fetched successfully"
+  },
+
+  "server_error": "Server error."
+}
