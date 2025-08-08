@@ -13,7 +13,11 @@ export class ProductsService {
   ) {}
 
   async create(userId: number, dto: CreateProductDto) {
-    const { sku } = dto;
+    const { name, description, price, stock, sku } = dto;
+
+  if (!name || !description || !price || !stock || !sku) {
+    throw new BadRequestException(this.i18nService.t('product.missing_fields'));
+  }
 
     // Check SKU uniqueness
     const existingProduct = await this.prismaService.product.findUnique({ where: { sku } });
@@ -32,12 +36,37 @@ export class ProductsService {
   }
 
   async findAll() {
-    return await this.prismaService.product.findMany();
+    // return await this.prismaService.product.findMany();
+    return await this.prismaService.product.findMany({
+      include: {
+        owner: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
+    });
   }
 
   async findOne(id: number) {
-    const product = await this.prismaService.product.findUnique({ where: { id } });
+    // const product = await this.prismaService.product.findUnique({ where: { id } });
+    const product = await this.prismaService.product.findUnique({
+      where: { id },
+      include: {
+        owner: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+      },
+    });
+
     if (!product) throw new NotFoundException(this.i18nService.t('product.not_found'));
+    
     return product;
   }
 

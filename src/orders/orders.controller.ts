@@ -21,6 +21,7 @@ import {
   ApiHeader,
   ApiParam,
 } from '@nestjs/swagger';
+import { OrderResponseDto } from './dto/order-response.dto';
 
 @ApiTags('Orders')
 @ApiBearerAuth()
@@ -40,7 +41,7 @@ export class OrdersController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new order' })
-  @ApiResponse({ status: 201, description: 'Order created successfully' })
+  @ApiResponse({ status: 201, description: 'Order created successfully', type: OrderResponseDto })
   @ApiResponse({ status: 400, description: 'Invalid request (e.g. missing items)' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async createOrder(
@@ -56,7 +57,7 @@ export class OrdersController {
 
   @Get()
   @ApiOperation({ summary: "Get current user's orders" })
-  @ApiResponse({ status: 200, description: 'List of the user orders' })
+  @ApiResponse({ status: 200, description: 'List of the user orders', type: [OrderResponseDto] })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async getUserOrders(@CurrentUser('id') userId: number) {
     const orders = await this.ordersService.getUserOrders(userId);
@@ -68,7 +69,7 @@ export class OrdersController {
 
   @Get('all')
   @ApiOperation({ summary: 'Get all orders (Admin only)' })
-  @ApiResponse({ status: 200, description: 'List of all orders' })
+  @ApiResponse({ status: 200, description: 'List of all orders', type: [OrderResponseDto] })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   @ApiResponse({ status: 403, description: 'Forbidden - Admins only' })
   async getAllOrders(@CurrentUser('role') role: UserRole) {

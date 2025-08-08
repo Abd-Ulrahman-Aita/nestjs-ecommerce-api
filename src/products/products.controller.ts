@@ -23,6 +23,7 @@ import {
   ApiParam,
   ApiHeader,
 } from '@nestjs/swagger';
+import { ProductResponseDto } from './dto/product-response.dto';
 
 @ApiTags('Products')
 @ApiHeader({
@@ -39,7 +40,8 @@ export class ProductsController {
   @Post()
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Create a new product' })
-  @ApiResponse({ status: 201, description: 'Product created successfully' })
+  @ApiResponse({ status: 201, description: 'Product created successfully', type: ProductResponseDto })
+  @ApiResponse({ status: 400, description: 'Invalid input' })
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async create(
     @CurrentUser('id') userId: number,
@@ -50,7 +52,7 @@ export class ProductsController {
 
   @Get()
   @ApiOperation({ summary: 'Get all products' })
-  @ApiResponse({ status: 200, description: 'List of all products' })
+  @ApiResponse({ status: 200, description: 'List of all products', type: [ProductResponseDto] })
   findAll() {
     return this.productsService.findAll();
   }
@@ -58,7 +60,7 @@ export class ProductsController {
   @Get(':id')
   @ApiOperation({ summary: 'Get a product by ID' })
   @ApiParam({ name: 'id', type: Number })
-  @ApiResponse({ status: 200, description: 'Product found' })
+  @ApiResponse({ status: 200, description: 'Product found', type: ProductResponseDto })
   @ApiResponse({ status: 404, description: 'Product not found' })
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.productsService.findOne(id);
@@ -69,7 +71,7 @@ export class ProductsController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Update a product by ID (owner or admin only)' })
   @ApiParam({ name: 'id', type: Number })
-  @ApiResponse({ status: 200, description: 'Product updated successfully' })
+  @ApiResponse({ status: 200, description: 'Product updated successfully', type: ProductResponseDto })
   @ApiResponse({ status: 403, description: 'Forbidden' })
   @ApiResponse({ status: 404, description: 'Product not found' })
   update(

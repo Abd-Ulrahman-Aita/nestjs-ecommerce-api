@@ -17,13 +17,20 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 import { 
   ApiBearerAuth, 
+  ApiTags, 
   ApiBody, 
   ApiOperation, 
   ApiResponse, 
-  ApiTags 
+  ApiHeader, 
 } from '@nestjs/swagger';
 
 @ApiTags('Auth')
+@ApiHeader({
+  name: 'Accept-Language',
+  description: 'Preferred language (e.g., "en", "ar")',
+  required: false,
+  example: 'en',
+})
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
