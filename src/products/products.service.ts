@@ -50,7 +50,10 @@ export class ProductsService {
     const product = await this.prismaService.product.findUnique({ where: { id } });
     if (!product) throw new NotFoundException(this.i18nService.t('product.not_found'));
 
-    if (product.owner_id !== userId && userRole !== UserRole.ADMIN) {
+    const isOwner = product.owner_id !== userId;
+    const isAdmin = userRole !== UserRole.ADMIN;
+
+    if (!isOwner && !isAdmin) {
       throw new ForbiddenException(this.i18nService.t('auth.unauthorized'));
     }
 
@@ -64,7 +67,10 @@ export class ProductsService {
     const product = await this.prismaService.product.findUnique({ where: { id } });
     if (!product) throw new NotFoundException(this.i18nService.t('product.not_found'));
 
-    if (product.owner_id !== userId && userRole !== UserRole.ADMIN) {
+    const isOwner = product.owner_id !== userId;
+    const isAdmin = userRole !== UserRole.ADMIN;
+
+    if (!isOwner && !isAdmin) {
       throw new ForbiddenException(this.i18nService.t('auth.unauthorized'));
     }
 

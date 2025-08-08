@@ -5,8 +5,7 @@ import {
   Delete,
   Param,
   Body,
-  Req,
-  UseGuards,
+  UseGuards
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
@@ -14,7 +13,23 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CurrentUser } from 'src/common/decorators/current-user.decorator';
 import { UserRole } from '@prisma/client';
 import { I18nService } from 'nestjs-i18n';
+import {
+  ApiBearerAuth,
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiHeader,
+  ApiParam,
+} from '@nestjs/swagger';
 
+@ApiTags('Orders')
+@ApiBearerAuth()
+@ApiHeader({
+  name: 'Accept-Language',
+  description: 'Preferred language (e.g., "en", "ar")',
+  required: false,
+  example: 'en',
+})
 @UseGuards(JwtAuthGuard)
 @Controller('orders')
 export class OrdersController {
@@ -24,6 +39,10 @@ export class OrdersController {
   ) {}
 
   @Post()
+  @ApiOperation({ summary: 'Create a new order' })
+  @ApiResponse({ status: 201, description: 'Order created successfully' })
+  @ApiResponse({ status: 400, description: 'Invalid request (e.g. missing items)' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   async createOrder(
     @CurrentUser('id') userId: number,
     @Body() dto: CreateOrderDto
@@ -36,6 +55,9 @@ export class OrdersController {
   }
 
   @Get()
+  @ApiOperation({ summary: "Get current user's orders" })
+  @ApiResponse({ status: 200, description: 'List of the user orders' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
   async getUserOrders(@CurrentUser('id') userId: number) {
     const orders = await this.ordersService.getUserOrders(userId);
     return {
@@ -45,6 +67,10 @@ export class OrdersController {
   }
 
   @Get('all')
+  @ApiOperation({ summary: 'Get all orders (Admin only)' })
+  @ApiResponse({ status: 200, description: 'List of all orders' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden - Admins only' })
   async getAllOrders(@CurrentUser('role') role: UserRole) {
     const orders = await this.ordersService.getAllOrders(role);
     return {
@@ -54,6 +80,12 @@ export class OrdersController {
   }
 
   @Delete(':id')
+  @ApiOperation({ summary: 'Delete an order by ID (Admin only)' })
+  @ApiParam({ name: 'id', description: 'The ID of the order to delete' })
+  @ApiResponse({ status: 200, description: 'Order deleted successfully' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({ status: 403, description: 'Forbidden - Admins only' })
+  @ApiResponse({ status: 404, description: 'Order not found' })
   async deleteOrderById(
     @Param('id') id: string,
     @CurrentUser('role') role: UserRole
